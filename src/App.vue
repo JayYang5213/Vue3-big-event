@@ -1,9 +1,11 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from '@/stores'
+
+const userStore = useUserStore()
+</script>
 
 <template>
-  <div>
-    <router-view>app</router-view>
-  </div>
+  <div>app</div>
 </template>
 
 <style scoped></style>
