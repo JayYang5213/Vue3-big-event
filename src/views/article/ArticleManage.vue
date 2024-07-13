@@ -1,23 +1,12 @@
 <script setup>
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import ChannelSelect from './components/ChannelSelect.vue'
+import { artGetListService } from '@/api/article'
+import { formatTime } from '@/utils/format'
 
-const articleList = ref([
-  {
-    id: 5961,
-    title: '新的文章啊',
-    pub_date: '2022-07-10 14:53:52.604',
-    state: '已发布',
-    cate_name: '体育',
-  },
-  {
-    id: 5962,
-    title: '新的文章啊',
-    pub_date: '2022-07-10 14:54:30.904',
-    state: '草搞',
-    cate_name: '体育',
-  },
-])
+const articleList = ref([])
+const total = ref(0)
 
 const onEditArticle = (row) => {
   console.log(row)
@@ -25,6 +14,20 @@ const onEditArticle = (row) => {
 const onDeleteArticle = (row) => {
   console.log(row)
 }
+
+const params = ref({
+  pagenum: 1,
+  pagesize: 5,
+  cate_id: '',
+  state: '',
+})
+
+const getArticleList = async () => {
+  const res = await artGetListService(params.value)
+  articleList.value = res.data.data
+  total.value = res.data.total
+}
+getArticleList()
 </script>
 
 <template>
@@ -36,13 +39,15 @@ const onDeleteArticle = (row) => {
     <!-- 搜索区域 -->
     <el-form inline>
       <el-form-item label="文章分类：">
-        <el-select>
-          <el-option label="新闻" value="111"></el-option>
-          <el-option label="体育" value="222"></el-option>
-        </el-select>
+        <!-- 父传子 -->
+        <channel-select v-model="params.cate_id"></channel-select>
       </el-form-item>
-      <el-form-item label="发布状态：">
-        <el-select>
+      <el-form-item
+        label="发布状态："
+        placeholder="Select"
+        style="width: 240px"
+      >
+        <el-select v-model="params.state">
           <el-option label="已发布" value="已发布"></el-option>
           <el-option label="草稿" value="草稿"></el-option>
         </el-select>
@@ -61,7 +66,11 @@ const onDeleteArticle = (row) => {
       </el-table-column>
 
       <el-table-column label="分类" prop="cate_name"></el-table-column>
-      <el-table-column label="发表时间" prop="pub_date"> </el-table-column>
+      <el-table-column label="发表时间">
+        <template #default="{ row }">
+          {{ formatTime(row.pub_date) }}
+        </template>
+      </el-table-column>
       <el-table-column label="状态" prop="state"></el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
