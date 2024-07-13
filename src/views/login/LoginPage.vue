@@ -1,6 +1,11 @@
 <script setup>
+import { userRegisterService } from '@/api/user.js'
+
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+
+// 通过 ref 获取到表单组件
+const form = ref()
 
 // 注册页面还是登录页面
 const isRegister = ref(true)
@@ -45,6 +50,14 @@ const rules = {
     },
   ],
 }
+
+const register = async () => {
+  await form.value.validate()
+  await userRegisterService(formModel.value)
+  ElMessage.success('注册成功')
+  // 切换到登录
+  isRegister.value = false
+}
 </script>
 
 <template>
@@ -86,7 +99,12 @@ const rules = {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="button" type="primary" auto-insert-space>
+          <el-button
+            @click="register"
+            class="button"
+            type="primary"
+            auto-insert-space
+          >
             注册
           </el-button>
         </el-form-item>
