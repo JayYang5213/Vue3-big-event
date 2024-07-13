@@ -5,7 +5,7 @@ const userStore = useUserStore()
 </script>
 
 <template>
-  <div>app</div>
+  <router-view></router-view>
 </template>
 
 <style scoped></style>
