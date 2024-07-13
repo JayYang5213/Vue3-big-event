@@ -1,6 +1,6 @@
 <script setup>
 import { userRegisterService, userLoginService } from '@/api/user.js'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/stores' // modules里面的做了统一导出
 import { useRouter } from 'vue-router'
 
 import { User, Lock } from '@element-plus/icons-vue'
@@ -14,8 +14,8 @@ const isRegister = ref(false)
 
 // 注册
 const formModel = ref({
-  username: '',
-  password: '',
+  username: '798zs',
+  password: '123456',
   repassword: '',
 })
 
