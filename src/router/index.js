@@ -35,7 +35,7 @@ const router = createRouter({
   ],
 })
 
-// 登录访问拦截
+// 前置守卫 - 登录访问拦截
 router.beforeEach((to) => {
   if (!useUserStore().token && to.path !== '/login') {
     return '/login'
