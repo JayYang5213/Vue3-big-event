@@ -32,3 +32,6 @@ https://fe-bigevent-web.itheima.net/article/manage
 
 ### 接口文档
 https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850835
+
+### 参考视频
+https://www.bilibili.com/video/BV1HV4y1a7n4/?p=159&spm_id_from=pageDriver&vd_source=ee62bd263e6dda854185d451b295bbeb
