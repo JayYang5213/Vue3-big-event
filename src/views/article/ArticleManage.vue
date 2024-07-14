@@ -22,12 +22,26 @@ const params = ref({
   state: '',
 })
 
+const loading = ref(false)
+
 const getArticleList = async () => {
+  loading.value = true
   const res = await artGetListService(params.value)
   articleList.value = res.data.data
   total.value = res.data.total
+  loading.value = false
 }
 getArticleList()
+
+const onSizeChange = (size) => {
+  params.value.pagenum = 1
+  params.value.pagesize = size
+  getArticleList()
+}
+const onCurrentChange = (page) => {
+  params.value.pagenum = page
+  getArticleList()
+}
 </script>
 
 <template>
@@ -58,7 +72,7 @@ getArticleList()
       </el-form-item>
     </el-form>
 
-    <el-table :data="articleList" style="width: 100%">
+    <el-table v-loading="loading" :data="articleList" style="width: 100%">
       <el-table-column label="文章标题" width="400">
         <template #default="{ row }">
           <el-link type="primary" :underline="false">{{ row.title }}</el-link>
@@ -94,5 +108,17 @@ getArticleList()
         <el-empty description="没有数据" />
       </template>
     </el-table>
+
+    <el-pagination
+      v-model:current-page="params.pagenum"
+      v-model:page-size="params.pagesize"
+      :page-sizes="[2, 5, 10]"
+      layout="jumper, total, sizes, prev, pager, next"
+      background
+      :total="total"
+      @size-change="onSizeChange"
+      @current-change="onCurrentChange"
+      style="margin-top: 20px; justify-content: flex-end"
+    />
   </page-container>
 </template>
