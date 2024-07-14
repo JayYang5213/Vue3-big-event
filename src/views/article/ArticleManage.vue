@@ -2,15 +2,24 @@
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import ChannelSelect from './components/ChannelSelect.vue'
+import ArticleEdit from './components/ArticleEdit.vue'
 import { artGetListService } from '@/api/article'
 import { formatTime } from '@/utils/format'
 
 const articleList = ref([])
+
 const total = ref(0)
 
-const onEditArticle = (row) => {
-  console.log(row)
+const articleEditRef = ref()
+
+const onAddArticle = () => {
+  articleEditRef.value.open({})
 }
+
+const onEditArticle = (row) => {
+  articleEditRef.value.open(row)
+}
+
 const onDeleteArticle = (row) => {
   console.log(row)
 }
@@ -38,6 +47,7 @@ const onSizeChange = (size) => {
   params.value.pagesize = size
   getArticleList()
 }
+
 const onCurrentChange = (page) => {
   params.value.pagenum = page
   getArticleList()
@@ -60,7 +70,7 @@ const onReset = () => {
 <template>
   <page-container title="文章管理">
     <template #extra>
-      <el-button type="primary">发布文章</el-button>
+      <el-button type="primary" @click="onAddArticle">发布文章</el-button>
     </template>
 
     <!-- 搜索区域 -->
@@ -85,6 +95,7 @@ const onReset = () => {
       </el-form-item>
     </el-form>
 
+    <!-- 表格 -->
     <el-table v-loading="loading" :data="articleList" style="width: 100%">
       <el-table-column label="文章标题" width="400">
         <template #default="{ row }">
@@ -122,6 +133,7 @@ const onReset = () => {
       </template>
     </el-table>
 
+    <!-- 分页组件 -->
     <el-pagination
       v-model:current-page="params.pagenum"
       v-model:page-size="params.pagesize"
@@ -133,5 +145,8 @@ const onReset = () => {
       @current-change="onCurrentChange"
       style="margin-top: 20px; justify-content: flex-end"
     />
+
+    <!-- 抽屉 -->
+    <article-edit ref="articleEditRef"></article-edit>
   </page-container>
 </template>

@@ -6,6 +6,9 @@ defineProps({
   modelValue: {
     type: [Number, String],
   },
+  width: {
+    type: String,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -26,6 +29,7 @@ getChannelList()
     placeholder="请选择"
     style="width: 240px"
     :modelValue="modelValue"
+    :style="{ width }"
     @update:modelValue="emit('update:modelValue', $event)"
   >
     <el-option
