@@ -65,6 +65,16 @@ const onReset = () => {
   params.value.state = ''
   getArticleList()
 }
+
+// 添加/修改成功
+const onSuccess = (type) => {
+  if (type === 'add') {
+    // 如果是添加，需要跳转渲染最后一页，编辑直接渲染当前页
+    const lastPage = Math.ceil((total.value + 1) / params.value.pagesize)
+    params.value.pagenum = lastPage
+  }
+  getArticleList()
+}
 </script>
 
 <template>
@@ -147,6 +157,6 @@ const onReset = () => {
     />
 
     <!-- 抽屉 -->
-    <article-edit ref="articleEditRef"></article-edit>
+    <article-edit ref="articleEditRef" @success="onSuccess"></article-edit>
   </page-container>
 </template>
