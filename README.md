@@ -27,3 +27,5 @@ pnpm dev
 ```sh
 pnpm build
 ```
+### 线上访问地址
+https://fe-bigevent-web.itheima.net/article/manage
