@@ -20,3 +20,7 @@ export const userUpdateInfoService = ({ id, nickname, email }) =>
 // 更新头像
 export const userUploadAvatarService = (avatar) =>
   request.patch('/my/update/avatar', { avatar })
+
+// 更新密码
+export const userUpdatePassService = ({ old_pwd, new_pwd, re_pwd }) =>
+  request.patch('/my/updatepwd', { old_pwd, new_pwd, re_pwd })
