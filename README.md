@@ -29,3 +29,6 @@ pnpm build
 ```
 ### 线上访问地址
 https://fe-bigevent-web.itheima.net/article/manage
+
+### 接口文档
+https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850835
